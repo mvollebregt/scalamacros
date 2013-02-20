@@ -44,4 +44,12 @@ object Macros {
     }
   }
 
+  def defvar() : Unit = macro defvar_impl
+  def defvar_impl(c: Context)(): c.Expr[Unit] = {
+    import c.universe._
+    c.Expr[Unit](Block(ValDef(Modifiers(), newTermName("myvar"), TypeTree(), Literal(Constant(12))), Literal(Constant(()))))
+
+    // (ValDef(Modifiers(), newTermName("myvar"), TypeTree(), Literal(Constant(12))))
+  }
+
 }

@@ -34,5 +34,12 @@ class HelloWorldSpec extends Specification {
     }
   }
 
+  "defvar" should {
+    "define a variable" in {
+      defvar()
+      // myvar must_== 12 does not work
+    }
+  }
+
 
 }
