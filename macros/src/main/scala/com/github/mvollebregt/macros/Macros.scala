@@ -27,4 +27,21 @@ object Macros {
     reify ( name.splice + " = " + value.splice )
   }
 
+  def swap(first: Any, second: Any): Unit = macro swap_impl
+  def swap_impl(c:Context)(first: c.Expr[Any], second: c.Expr[Any]) : c.Expr[Unit] = {
+    import c.universe._
+    import c.universe.Flag._
+    (first.tree, second.tree) match {
+      case (a: Ident, b: Ident) => {
+        val temp = newTermName(c.fresh())
+        c.Expr[Unit](Block(
+          ValDef(Modifiers(MUTABLE), temp, TypeTree(), a),
+          Assign(a, b),
+          Assign(b, Ident(temp))
+        ))
+      }
+      case _ => c.abort(c.enclosingPosition, "can only swap variables, not values!")
+    }
+  }
+
 }

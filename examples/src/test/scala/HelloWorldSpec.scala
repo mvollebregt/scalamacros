@@ -25,5 +25,14 @@ class HelloWorldSpec extends Specification {
     }
   }
 
+  "swap(a,b)" should {
+    "swap the values of variables a and b" in {
+      var a = 2
+      var b = 3
+      swap(a,b) // replace a or b with a value instead of a variable and you'll get a compilation error!
+      (a,b) must_== (3, 2)
+    }
+  }
+
 
 }
