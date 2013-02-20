@@ -52,4 +52,26 @@ object Macros {
     // (ValDef(Modifiers(), newTermName("myvar"), TypeTree(), Literal(Constant(12))))
   }
 
+  def silent(inpt : Unit) : Unit = macro silent_impl
+  def silent_impl(c: Context)(inpt: c.Expr[Unit]): c.Expr[Unit] = {
+    import c.universe._
+    inpt.tree match {
+      case Block(commands : List[Any], lastCommand) => {
+        c.Expr[Unit](Block((commands :+ lastCommand).filter {
+          case (Apply(Select(Select(This(_scala), _predef), _println), _)) =>
+              _scala != newTypeName("scala") ||
+              _predef != newTermName("Predef") ||
+              _println != newTermName("println")
+          case _ => true } : _*))
+      }
+      case (Apply(Select(Select(This(_scala), _predef), _println), _)) => {
+          if (_scala == newTypeName("scala") &&
+              _predef == newTermName("Predef") &&
+              _println == newTermName("println")) reify {} else inpt
+        }
+      case x => inpt
+    }
+  }
+
+
 }

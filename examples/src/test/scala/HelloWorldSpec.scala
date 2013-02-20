@@ -41,5 +41,22 @@ class HelloWorldSpec extends Specification {
     }
   }
 
+  "silent" should {
+    "skip all printlns" in {
+      var a = 3
+      def print() = println("THIS SHOULD BE PRINTED!!!!!!!!!!!!!!!!!!!")
+      silent {
+        print()
+        println("aLKJDFJKB3liuHJKHDFLSHEIRUWHNKJFSHDLFIUWEHLRKWEJHFILUSDFHJKWHERIUSDHFNSKJDFSDF")
+        println("bSDFJAHEROIUHSNFLJKBAWEQPROUHSDLFKHABIEWRHLAKSDHFIAUWEBRFASDHFASDP;FIOAUSBDFKSAJ")
+        a = 4
+      }
+      silent(println("LSJDFLKWENROISDFLKJWEROINSDLFKSJEORISLDKFJ"))
+      a must_== 4
+      silent{a=6}
+      a must_==6
+    }
+  }
+
 
 }
