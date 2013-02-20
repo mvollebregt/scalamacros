@@ -6,7 +6,7 @@ object BuildSettings {
     organization  := "com.github.mvollebregt",
     version       := "0.1",
     scalaVersion  := "2.10.0",
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
+    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation", "-Xlog-free-terms")
   )
 }
 

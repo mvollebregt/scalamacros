@@ -18,5 +18,12 @@ class HelloWorldSpec extends Specification {
     }
   }
 
+  "debug(variablename)" should {
+    "return variablename = variablevalue" in {
+      val variablename = "variablevalue"
+      debugg(variablename) must_== "variablename = variablevalue"
+    }
+  }
+
 
 }
